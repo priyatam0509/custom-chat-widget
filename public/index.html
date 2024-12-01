@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="amazon-connect-chat-interface.js"></script>
+    <script src="ACChat.js"></script>
+    <script>
+        AmazonCustomChatWidget.ChatInterface.init({
+            containerId: 'root',
+            initiationIcon: 'icon', // Set either 'icon' or 'button'
+            region: "us-west-2",
+            name: "refer|inputFields|Name", // **** Mandatory**** For chat without form, please add a constant or a variable. Otherwise, if you have a chat form, then you can refer it to the input fields like "refer|inputFields|Name"
+            username: "refer|inputFields|UserName", // **** Mandatory**** For chat without form, please add a constant or a variable. Otherwise, if you have a chat form, then you can refer it to the input fields like "refer|inputFields|UserName"
+            apiGateway: "https://lkspuulmoj.execute-api.us-west-2.amazonaws.com/Prod", // **** Mandatory Provide the api gateway ARN from installing the async chat cloudformation as explained in the readme document.
+            contactFlowId: '05808809-21fd-4dc9-aced-eca96f67e61c', // This is the contact flow ID and not the full ARN of that contact Flow, please check README.md for more information.
+            instanceId: 'da77a2e8-f198-4d0a-a3be-d47ad3bf81aa', // This is the connect instance ID and not the full ARN of that contact Flow, please check README.md for more information.
+            attachments: true,
+            contactAttr: {
+                SomeContactAttributeKey: "SomeContactAttributeValue",
+            },
+            // Set optional chat duration: https://docs.aws.amazon.com/connect/latest/APIReference/API_StartChatContact.html#connect-StartChatContact-request-ChatDurationInMinutes
+            chatDurationInMinutes: 1500, // min 60, max 10080 - default 1500 (25 hours)
+            preChatForm: {
+                visible: true,
+                inputFields: [{
+                    name: "Name",
+                    validation: "required"
+                }, {
+                    name: "Email Address",
+                    validation: "required"
+                }, {
+                    name: "Event ID",
+                    validation: "notrequired"
+                },
+                {
+                    name: "Company Name",
+                    validation: "notrequired"
+                }
+            ]
+            },
+            primaryColor: '#002554',
+            description: 'Candidate Support'
+        })
+    </script>
+</body>
+
+</html>
