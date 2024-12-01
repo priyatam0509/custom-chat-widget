@@ -1,110 +1,162 @@
 import styled from 'styled-components';
 
+const breakpoints = {
+  mobile: '320px',
+  tablet: '768px',
+  laptop: '1024px',
+  desktop: '1440px'
+};
+
 export const ChatWrapper = styled.div`
-    .header-wrapper {
-        background: ${props => props.primaryColor ? props.primaryColor : "#3F5773"};
-        text-align: center;
-        padding: 2px;
-        color: #fff !important;
-    }
+  .header-wrapper {
+    background: ${props => props.primaryColor || "#3F5773"};
+    text-align: center;
+    padding: 15px;
+    color: #fff !important;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-radius: 10px 10px 0 0;
 
-    .footer-actions {
-        background: rgba(242, 242, 242, 0.49);
-        
+    @media (max-width: ${breakpoints.mobile}) {
+      padding: 10px;
     }
+  }
 
-    .welcome-text {
-        color: whitesmoke;
-        border-bottom: none;
-    }
+  .footer-actions {
+    background: rgba(242, 242, 242, 0.49);
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+  }
 
-    .button-wrapper {
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        height: 100%;
-        align-items: center;
-        border-radius: 5px;
-    }
-
-    .button-wrapper > button {
-        min-width: 85px;
-        margin: 6px;
-        font-weight: bold;
-    }
-
-    .connect-customer-interface {
-    @media ${props => props.device.laptop} {
-        width: 600px !important; /* Widget width */
-        height: 650px;
-    }
-    height: 600px; /* Increased height for more space */
-    width: 800px;  /* Increased width for more space */
+  .welcome-text {
+    color: white;
+    text-align: left;
+    margin: 0;
+    padding-right: 40px;
+    font-family: 'Montserrat' !important;
     
-    overflow-y: auto;
-    overflow-x: hidden;  /* Prevent horizontal overflow */
+
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 14px;
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    flex-wrap: wrap;
+
+    @media (max-width: ${breakpoints.mobile}) {
+      gap: 5px;
+    }
+
+button {
+      min-width: 85px;
+      font-weight: bold;
+
+      @media (max-width: ${breakpoints.mobile}) {
+        min-width: 70px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .connect-customer-interface {
     display: flex;
     flex-direction: column;
-    border-radius: 10px; /* Rounded corners */
-}
+    height: calc(100vh - 150px);
+    max-height: 600px;
+    width: 100%;
+    max-width: 600px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-.connect-customer-interface > *:not(:first-child) {
-    visibility: hidden; /* Hides the other items */
-    height: 0; /* Removes their height */
-    margin: 0; /* Removes their margin */
-    padding: 0; /* Removes their padding */
-    overflow: hidden; /* Ensures no content is visible */
-}
-
-
-    .action-button {
-        width: 100%;
-        line-height: 1.465;
-        font-weight: normal;
-        white-space: nowrap;
-        color: rgb(17, 17, 17);
-        cursor: pointer;
-        text-align: center;
-        vertical-align: middle;
-        padding-right: 10px;
-        padding-left: 10px;
-        font-family: AmazonEmber_Md, Helvetica, sans-serif;
-        display: inline-flex;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        max-width: 260px;
-        padding-top: 100px;
-        padding-bottom: 0.45rem;
-        font-size: 0.875rem;
-        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px 0px;
-        border-width: 0px;
-        border-style: solid;
-        background: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255) 80%, rgb(255, 255, 255));
-        border-color: rgb(255, 255, 255);
+    @media (max-width: ${breakpoints.tablet}) {
+      height: calc(100vh - 120px);
     }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      height: calc(100vh - 100px);
+    }
+  }
+
+  .input-section {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: ${breakpoints.mobile}) {
+      padding: 10px;
+    }
+  }
+
+  .action-button {
+    width: 100%;
+    max-width: 260px;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(17, 17, 17);
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f8f8f8;
+    }
+
+    @media (max-width: ${breakpoints.tablet}) {
+      max-width: 220px;
+      padding: 10px 12px;
+    }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      max-width: 200px;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+  }
 `;
 
 export const ChatContainer = styled.div`
-    @media ${props => props.device.laptop} {
-        
-       
-       
-    }
-    position: fixed;
-    bottom: 65px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 600px;
+  height: auto;
+  max-height: calc(100vh - 40px);
+  z-index: 9999;
+  transition: all 0.3s ease;
+
+  @media (max-width: ${breakpoints.laptop}) {
+    width: 500px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: calc(100% - 40px);
+    max-width: 450px;
+    bottom: 10px;
     right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 3px;
-    margin-left: 3px;
-    float: left;
-    overflow: auto;
-    border-radius: 10px 10px 0 0; /* Rounded top corners for visual consistency */
-    z-index: 9999;
-    
-    box-shadow: none; /* Remove shadow from the outer container */
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: calc(100% - 20px);
+    right: 10px;
+    bottom: 10px;
+  }
 `;

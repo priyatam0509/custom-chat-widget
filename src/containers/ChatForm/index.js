@@ -64,13 +64,13 @@
 //                     ))
 
 //                 }
-//                 <label style={{ display: 'flex', alignItems: 'center', marginTop: '16px', cursor: 'pointer', fontFamily: '-apple-system, system-ui, sans-serif' }}>
+//                 <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '16px', cursor: 'pointer', fontFamily: '-apple-system, system-ui, sans-serif', flexDirection: 'row' }}>
 //             <input 
 //                 type="checkbox" 
 //                 required 
-//                 style={{ width: '18px', height: '18px', marginRight: '10px', cursor: 'pointer', accentColor: '#4a90e2' }}
+//                 style={{ width: '18px', height: '18px', marginRight: '10px', cursor: 'pointer', accentColor: '#4a90e2', alignSelf: 'flex-start' }}
 //             />
-//             <span style={{ color: '#333', fontSize: '14px' }}>We are here to help! using our chat means we collect basic info to assit you, see our privacy policy for details.</span>
+//             <span style={{ color: '#333', fontSize: '14px', fontFamily: 'Montserrat !important' }}>We are here to help! using our chat means we collect basic info to assit you, see our privacy policy for details.</span>
 //             </label>
 //                     <SubmitButton>Submit</SubmitButton>
 //                 </Form> 
@@ -144,9 +144,11 @@ const ChatForm = ({ setData, setCurrentState }) => {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
+                        justifyContent: 'center', // Center the label content
                         marginTop: '16px',
                         cursor: 'pointer',
                         fontFamily: '-apple-system, system-ui, sans-serif',
+                        flexDirection: 'row', // Ensure checkbox and text are in a row
                     }}
                 >
                     <input
@@ -158,9 +160,10 @@ const ChatForm = ({ setData, setCurrentState }) => {
                             marginRight: '10px',
                             cursor: 'pointer',
                             accentColor: '#4a90e2',
+                            alignSelf: 'flex-start', // Align checkbox to the start (left)
                         }}
                     />
-                    <span style={{ color: '#333', fontSize: '14px' }}>
+                    <span style={{ color: '#333', fontSize: '14px', fontFamily: 'Montserrat !important' }}>
                         We are here to help! Using our chat means we collect basic info to assist you. See our privacy policy for details.
                     </span>
                 </label>
