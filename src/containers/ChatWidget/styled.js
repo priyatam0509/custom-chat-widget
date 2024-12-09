@@ -1,3 +1,5 @@
+import React from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 const breakpoints = {
@@ -28,14 +30,15 @@ export const ChatWrapper = styled.div`
     padding: 10px;
     border-radius: 0 0 10px 10px;
   }
-
+  .incoming-user-message {
+    color: blue; 
+    }
   .welcome-text {
     color: white;
     text-align: left;
     margin: 0;
     padding-right: 40px;
-    font-family: 'Montserrat' !important;
-    
+    font-family: 'Montserrat', sans-serif;
 
     @media (max-width: ${breakpoints.mobile}) {
       font-size: 14px;
@@ -54,7 +57,7 @@ export const ChatWrapper = styled.div`
       gap: 5px;
     }
 
-button {
+    button {
       min-width: 85px;
       font-weight: bold;
 
@@ -160,3 +163,27 @@ export const ChatContainer = styled.div`
     bottom: 10px;
   }
 `;
+
+const ChatComponent = () => {
+  return (
+    <>
+      <Helmet>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
+      <ChatContainer>
+        <ChatWrapper>
+          <div className="header-wrapper">Header</div>
+          <div className="connect-customer-interface">Chat Content</div>
+          <div className="input-section">Input Section</div>
+        </ChatWrapper>
+      </ChatContainer>
+    </>
+  );
+};
+
+export default ChatComponent;

@@ -1,27 +1,23 @@
-/*! Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-SPDX-License-Identifier: MIT-0 */
-
-
+import React from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 export const InputSection = styled.div`
     display: flex;
-	flex-direction: column;
-	margin-bottom: 20px;
+    flex-direction: column;
+    margin-bottom: 20px;
     width: 100%;
     max-width: 400px;
-    
 `;
-
 
 export const Label = styled.label`
     display: block;
-    font-family: 'Montserrat' !important;
+    font-family: 'Montserrat', sans-serif;
     padding-top: 10px;
     text-align: left;
     margin-bottom: 5px;
-	font-weight: bold;
-	width: 100%;
+    font-weight: bold;
+    width: 100%;
 `;
 
 export const Input = styled.input`
@@ -29,8 +25,8 @@ export const Input = styled.input`
     border-radius: 10px;
     padding: 10px;
     width: 100%;
-    
-    @media ${props => props.device.laptop}{
+
+    @media ${(props) => props.device.laptop} {
         border: unset;
         outline: unset;
     }
@@ -51,7 +47,29 @@ export const Input = styled.input`
 
 export const Error = styled.p`
     margin-top: 10px;
-	font-weight: bold;
-	font-style: italic;
-	color: #b60000;
+    font-weight: bold;
+    font-style: italic;
+    color: #b60000;
 `;
+
+const MyComponent = () => {
+    return (
+        <>
+            <Helmet>
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+                    rel="stylesheet"
+                />
+            </Helmet>
+            <InputSection>
+                <Label>Enter your text:</Label>
+                <Input type="text" />
+                <Error>Something went wrong!</Error>
+            </InputSection>
+        </>
+    );
+};
+
+export default MyComponent;
