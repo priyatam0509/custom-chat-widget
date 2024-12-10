@@ -4,6 +4,8 @@ import { device, chatWithFormStates, loggerNames, inputFieldValidations } from '
 import InputField from '../../components/InputField';
 import { FormSection, SubmitButton, FormHeader, Form, TooltipText } from './styled';
 import { genLogger } from "../../lib/logger";
+import { AiOutlineClose } from "react-icons/ai";
+// import './chatform.css'
 
 const name = loggerNames.containers.CHAT_FORM;
 const { log } = genLogger(name);
@@ -68,70 +70,121 @@ const ChatForm = ({ setData, setCurrentState }) => {
         setCurrentState(chatWithFormStates.CHAT_WIDGET);
     };
 
-    const getTooltipContent = (fieldName) => {
-        switch (fieldName.toLowerCase()) {
-            case 'event id':
-                return "Enter the unique identifier for your event. This helps us provide specific information.";
-            case 'name':
-                return "Please enter your full name.";
-            case 'email':
-                return "Enter a valid email address where we can reach you.";
-            default:
-                return "";
-        }
-    };
+    // const getTooltipContent = (fieldName) => {
+    //     switch (fieldName.toLowerCase()) {
+    //         case 'event id (?)':
+    //             return "Enter the unique identifier for your event. This helps us provide specific information.";
+    //         // case 'name':
+    //         //     return "Please enter your full name.";
+    //         // case 'email address':
+    //         //     return "Enter a valid email address where we can reach you.";
+    //         default:
+    //             return "";
+    //     }
+    // };
 
     return (
         <FormSection device={device}>
             <FormHeader primaryColor={primaryColor} device={device}>
+                <div style={{display:"flex"}}>
+                <img src="./img/logo.png"></img>
                 <h2 className="preChatForm-welcome-text">{description}</h2>
+                </div>
+                <AiOutlineClose size={24} color="#fff" />
             </FormHeader>
             <Form onSubmit={submitForm} device={device}>
-                {inputFields.map((field, index) => (
-                    <div key={index} style={{ position: 'relative', marginBottom: '20px' }}>
-                        <InputField
-                            ref={inputRefs.current[index]}
-                            name={field.name}
-                            label={field.name}
-                            onChange={handleInputDataChange}
-                            validation={field.validation || inputFieldValidations.NOT_REQUIRED}
-                            onMouseEnter={() => setActiveTooltip(field.name)}
-                            onMouseLeave={() => setActiveTooltip(null)}
-                        />
-                        {activeTooltip === field.name && (
-                            <TooltipText>
-                                {getTooltipContent(field.name)}
-                            </TooltipText>
-                        )}
-                    </div>
-                ))}
-
-                {/* Display email error if there's any */}
-                {emailError && <div style={{ color: 'red', marginBottom: '10px' }}>{emailError}</div>}
-
-                <label
-                    style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        marginTop: '16px',
-                        cursor: 'pointer',
-                        fontFamily: '-apple-system, system-ui, sans-serif',
-                        flexDirection: 'row',
-                    }}
-                >
-                    <span style={{ color: '#333', fontSize: '14px', fontFamily: 'Montserrat, sans-serif' }}>
-                        Using our chat means we collect basic info to assist you. See our{' '}
-                        <a
-                            href="https://www.criteriacorp.com/privacy-policy"
-                            style={{ color: '#1ec3cb', textDecoration: 'none' }}
-                        >
-                            privacy policy
-                        </a>{' '}
-                        for details.
+    {inputFields.map((field, index) => (
+        <>
+        <div
+            key={index}
+            style={{ position: "relative", marginBottom: "5px" }} // Ensure spacing between fields
+            
+            // onMouseEnter={() => {
+            //     if (field.name === "Event ID (?)") { // Match exact field name
+            //         setActiveTooltip("event id");
+            //     }
+            // }}
+            // onMouseLeave={() => {
+            //     if (activeTooltip === "event id") {
+            //         setActiveTooltip(null);
+            //     }
+            // }}
+        >
+            <label style={{ display: "flex", alignItems: "center" }}>
+                <span>{field.name}</span>
+                {/* Tooltip only on "?" */}
+                {field.name === "Event ID" && (
+                    <span
+                        style={{
+                            marginLeft: "5px",
+                            cursor: "pointer",
+                            fontFamily: "Montserrat, sans-serif",
+                            color: "#000", // Optional: Highlight the "?"
+                        }}
+                        onMouseEnter={() => setActiveTooltip("event id")}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                    >
+                        (?)
                     </span>
-                </label>
-                <SubmitButton type="submit">Submit</SubmitButton>
-            </Form>
+                )}
+            </label>
+            </div>
+        <div>
+            <InputField
+                ref={inputRefs.current[index]}
+                name={field.name}
+                // label={field.name}
+                onChange={handleInputDataChange}
+                validation={field.validation || inputFieldValidations.NOT_REQUIRED}
+            />
+            {/* Render tooltip for "Event ID (?)" */}
+            
+        </div>
+        </>
+    ))}
+
+            {activeTooltip === "event id" && (
+                <TooltipText className="tooltip-text">
+                    {/* {getTooltipContent(field.name)} */}
+                    <p>Enter the unique identifier for your event. This helps us provide specific information.</p>
+                </TooltipText>
+            )}
+
+    {/* Display email error if there's any */}
+    {emailError && (
+        <div style={{ color: "red", marginBottom: "10px" }}>{emailError}</div>
+    )}
+
+    <label
+        style={{
+            display: "flex",
+            fontFamily: "-apple-system, system-ui, sans-serif",
+            textAlign:"center"
+        }}
+    >
+        <span
+            style={{
+                color: "#333",
+                fontSize: "14px",
+                fontFamily: "Montserrat, sans-serif",
+            }}
+        >
+            Using our chat means we collect basic info to assist you. See our{" "}
+            <a
+                href="https://www.criteriacorp.com/privacy-policy" target="_blank"
+                style={{ color: "#002554", textDecoration: "none" }}
+            >
+                privacy policy
+            </a>{" "}
+            for details.
+        </span>
+    </label>
+    <div style={{ textAlign: "center" }}>
+        <SubmitButton type="submit">Submit</SubmitButton>
+    </div>
+</Form>
+
+            
         </FormSection>
     );
 };

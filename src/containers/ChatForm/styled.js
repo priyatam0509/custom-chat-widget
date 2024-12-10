@@ -15,7 +15,7 @@ export const FormSection = styled.div`
   bottom: 0;
   right: 0;
   width: 600px;
-  height: 600px;
+  // height: 600px;
   max-height: 90vh;
   overflow-y: auto;
   display: grid;
@@ -36,7 +36,7 @@ export const FormSection = styled.div`
 
   @media (max-width: ${breakpoints.laptop}) {
     width: 500px;
-    height: 550px;
+    // height: 550px;
     bottom: 15px;
     right: 15px;
   }
@@ -64,16 +64,16 @@ export const FormSection = styled.div`
 
 export const Form = styled.form`
   padding: 20px;
-  grid-row: 2/3;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Align items to the left */
-  gap: 15px;
-  box-sizing: border-box;
-  text-align: left;
+  // grid-row: 2/3;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-start;
+  // align-items: flex-start; /* Align items to the left */
+  // gap: 15px;
+  // box-sizing: border-box;
+  // text-align: left;
   background: white;
-  height: 100%;
+  // height: 100%;
   overflow-y: auto;
   font-family: 'Montserrat', sans-serif;
 
@@ -86,12 +86,12 @@ export const Form = styled.form`
   input {
     width: 100%; /* Ensure the input spans the full width */
     max-width: 100%;
-    padding: 15px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom:10px
   }
-
   @media (max-width: ${breakpoints.tablet}) {
     padding: 15px;
     gap: 12px;
@@ -112,7 +112,7 @@ export const FormHeader = styled.div`
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   border-radius: 10px 10px 0 0;
   position: relative;
 
@@ -123,7 +123,10 @@ export const FormHeader = styled.div`
     padding-right: 40px;
     font-family: 'Montserrat', sans-serif;
   }
-
+  img{
+  width:30px;
+  margin-right:10px
+  }
   .close-button {
     cursor: pointer;
     background: transparent;
@@ -170,6 +173,7 @@ export const SubmitButton = styled.button`
   padding: 12px;
   border: none;
   cursor: pointer;
+  border-radius:13px;
   transition: all 0.3s ease;
   font-size: 16px;
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
@@ -202,7 +206,50 @@ export const SubmitButton = styled.button`
     margin-top: 15px;
   }
 `;
+export const TooltipText = styled.div`
+  // display: none;
+  position: absolute;
+  top: 47%; /* Positions the tooltip below the field */
+  left: 19%;
+  // transform: translateX(-50%);
+  background-color: #3F5773; /* Tooltip background color */
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  // white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+   width: 50%;
 
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  /* Tooltip arrow */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #3F5773 transparent;
+  }
+
+  /* Parent hover triggers tooltip visibility */
+  &:hover {
+    display: block;
+  }
+`;
 const FormComponent = () => {
   return (
     <>
@@ -222,9 +269,13 @@ const FormComponent = () => {
         <Form>
           <label htmlFor="input">Input Label</label>
           <input id="input" type="text" placeholder="Enter text" />
+          
           <SubmitButton>Submit</SubmitButton>
         </Form>
       </FormSection>
+      <TooltipText visible={isTooltipVisible}>
+            {/* Please enter a valid email address. */}
+          </TooltipText>
     </>
   );
 };

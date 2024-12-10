@@ -30,4 +30,7 @@ export const Button = styled.button`
     justify-content: center;
 	  align-items: center;
     background: ${props => props.primaryColor ? props.primaryColor : "#3F5773"};
+    img {
+    width: 24px;
+  }
 `;

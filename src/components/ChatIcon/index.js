@@ -77,7 +77,7 @@ const ChatIcon = (props) =>
   return (
       <div>
           <Button onClick={handleChatIconClickEvent} primaryColor={primaryColor}>
-            <Svg
+            {/* <Svg
               id="inner"
               viewBox="0 0 24 24"
               fill="white"
@@ -90,7 +90,8 @@ const ChatIcon = (props) =>
                 strokeWidth="1" 
               >
               </path>
-            </Svg>
+            </Svg> */}
+            <img src="./img/logo.png"></img>
           </Button>
         </div>
 
