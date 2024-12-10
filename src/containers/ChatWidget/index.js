@@ -183,7 +183,10 @@ const ChatWidget = ({
                     isHTML: true,
                     render: () => {
                         return (`<div class="header-wrapper">
+                            <div class="logodata">
+                            <img src="./img/logo.png" style={{ marginRight: 10px;width:30px }}></img>
                                     <h2 class="welcome-text">${description}</h2>
+                                    </div>
                                 </div>`);
                     }
                 },

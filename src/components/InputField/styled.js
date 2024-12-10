@@ -5,9 +5,9 @@ import styled from 'styled-components';
 export const InputSection = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 400px;
+    margin-bottom: 10px;
+    width: 95%;
+    // max-width: 400px;
 `;
 
 export const Label = styled.label`

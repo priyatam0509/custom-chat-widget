@@ -16,26 +16,53 @@ const InputField = forwardRef((props, ref) => {
         // Return true if valid, else return false
         if (props.validation) {
             const currentRule = props.validation;
-
-            // Required field validation
-            if (currentRule === inputFieldValidations.REQUIRED) {
-                if (!value) {
-                    setError("This field is required");
+        
+            // Trim value to avoid empty spaces causing issues
+            const trimmedValue = value.trim();
+        
+            // Email validation logic
+            if (props.name.toLowerCase() === 'email address') {
+                if (!trimmedValue) {
+                    setError("Please enter your email address");
                     return false;
                 }
-            }
-
-            // Email format validation
-            if (props.name.toLowerCase() === 'email') {
+                console.log(props.name)
+                // Check email format
                 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-                if (!emailPattern.test(value)) {
+                if (!emailPattern.test(trimmedValue)) {
                     setError("Please enter a valid email address");
                     return false;
                 }
             }
+            if (props.name.toLowerCase() === 'company name') {
+                if (!trimmedValue) {
+                    setError("Please enter your Company Name");
+                    return false;
+                }
+            }
+            // Required field validation for all fields (including email)
+            if (currentRule === inputFieldValidations.REQUIRED) {
+                if (!trimmedValue) {
+                    // Custom message based on field name
+                    if (props.name.toLowerCase() === 'name') {
+                        setError("Please enter your name");
+                    } else if (props.name.toLowerCase() === 'email address') {
+                        setError("Please enter your email address");
+                    }
+                    else if (props.name.toLowerCase() === 'company name') {
+                        setError("Please enter your comapny name");
+                    }
+                    else {
+                        setError(`Please enter ${props.name.toLowerCase()}`);
+                    }
+                    return false;
+                }
+            }
         }
-
-        return true; // Return true if all validations pass
+        
+        // Clear error if all validations pass
+        setError(null);
+        return true;
     };
 
     useImperativeHandle(ref, () => {
@@ -70,4 +97,4 @@ InputField.defaultProps = {
     validation: inputFieldValidations.NOT_REQUIRED,
 };
 
-export default InputField;
+export default InputField;  

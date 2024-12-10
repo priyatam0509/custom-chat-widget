@@ -24,7 +24,13 @@ export const ChatWrapper = styled.div`
       padding: 10px;
     }
   }
-
+  .logodata{
+  display:flex;
+  }
+  .logodata img{
+  width:30px;
+  margin-right:10px;
+  }
   .footer-actions {
     background: rgba(242, 242, 242, 0.49);
     padding: 10px;
@@ -71,7 +77,7 @@ export const ChatWrapper = styled.div`
   .connect-customer-interface {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 150px);
+    // height: calc(100vh - 150px);
     max-height: 600px;
     width: 100%;
     max-width: 600px;
@@ -88,7 +94,12 @@ export const ChatWrapper = styled.div`
       height: calc(100vh - 100px);
     }
   }
-
+.eMnscU {
+    background: rgb(215 215 215);
+}
+    .eMnscU::after {
+    display: none;
+}
   .input-section {
     position: sticky;
     bottom: 0;
