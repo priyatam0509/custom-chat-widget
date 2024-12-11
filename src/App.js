@@ -7,7 +7,7 @@ import ChatWithoutForm from './views/ChatWithoutForm';
 import { AppConfigProvider } from './providers/AppConfigProvider'
 import { genLogger } from "./lib/logger";
 import { loggerNames } from './constants';
-
+import "./style.css"
 const name = loggerNames.APP;
 const { log } = genLogger(name);
 

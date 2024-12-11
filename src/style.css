@@ -1,0 +1,20 @@
+/* .loader{
+    display: none !important;
+}
+ .bYooY{
+    background-color: transparent;
+} */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.typing-indicator p {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #666;
+}

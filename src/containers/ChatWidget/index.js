@@ -7,6 +7,7 @@ import { useAppConfig } from '../../providers/AppConfigProvider';
 import { device, chatWithFormStates, chatWidgetDefaults, chatParties, loggerNames } from '../../constants';
 import { ChatContainer, ChatWrapper } from './styled';
 import { genLogger } from "../../lib/logger";
+import { AiOutlineClose } from "react-icons/ai";
 
 const name = loggerNames.containers.CHAT_WIDGET;
 const { log, error, trace, info } = genLogger(name);
@@ -21,6 +22,7 @@ const ChatWidget = ({
     const [loading, setLoading] = useState(true);
     const [chatInitialized, setChatInitialized] = useState(false);
     const [toggleToForm, setToggleToForm] = useState(false);
+    const [isBotTyping, setIsBotTyping] = useState(false);
     const { primaryColor, description, region, apiGateway, contactFlowId, instanceId, enableAttachments } = useAppConfig();
     if (Object.keys(dataFromInputForm).length !== 0) log('dataFromInputForm: ', dataFromInputForm);
 
@@ -29,24 +31,38 @@ const ChatWidget = ({
     window.connect.ChatEvents &&
     window.connect.ChatEvents.onAgentEndChat(() => {
         setChatInitialized(false);
+        setCurrentState(chatWithFormStates.FORM); // Redirect to login form
+    });
+
+    window.connect.ChatEvents &&
+    window.connect.ChatEvents.onChatEnded(() => {
+        setChatInitialized(false);
+        setCurrentState(chatWithFormStates.FORM); // Redirect to login form
+    });
+
+
+   /* window.connect.ChatEvents &&
+    window.connect.ChatEvents.onAgentEndChat(() => {
+        setChatInitialized(false);
     });
 
     window.connect.ChatEvents &&
         window.connect.ChatEvents.onChatEnded(() => {
         setChatInitialized(false);
     });
+    */
 
-    const successHandler = (chatSession) => {
+    /*const successHandler = (chatSession) => {
         info("successHandler");
         setLoading(false);
 
         chatSession.incomingItemDecorator = function (item) {
             if ([chatParties.SYSTEM_MESSAGE].indexOf(item.displayName) !== -1) {
-                item.displayName = "";
+                item.displayName = "Criteria";
             }
 
             if ([chatParties.BOT].indexOf(item.displayName) !== -1) {
-                item.displayName = "";
+                item.displayName = "Criteria";
             }
 
             // Apply custom color styling to incoming user messages
@@ -65,12 +81,80 @@ const ChatWidget = ({
             trace("outgoing message:|| " + JSON.stringify(data));
         });
 
-        chatSession.onChatDisconnected(function (data) {
+        /*chatSession.onChatDisconnected(function (data) {
             info("Chat has been disconnected");
             trace(data);
             if (Object.keys(dataFromInputForm).length !== 0) setToggleToForm(true);
+        });*/
+        /*chatSession.onChatDisconnected(function (data) {
+            info("Chat has been disconnected");
+            trace(data);
+        
+            setChatInitialized(false); // Reset chat initialization state
+            setCurrentState(chatWithFormStates.FORM); // Redirect to the login form
+        
+            if (Object.keys(dataFromInputForm).length !== 0) {
+                setToggleToForm(true);
+            }
+        });
+        
+    };*/
+
+    const successHandler = (chatSession) => {
+        info("successHandler");
+        // setLoading(false);
+    
+        chatSession.incomingItemDecorator = function (item) {
+            if ([chatParties.SYSTEM_MESSAGE].indexOf(item.displayName) !== -1) {
+                item.displayName = "Criteria";
+            }
+    
+            if ([chatParties.BOT].indexOf(item.displayName) !== -1) {
+                item.displayName = "Criteria";
+            }
+    
+            if (item.displayName === chatParties.USER) {
+                item.className = 'incoming-user-message'; // Add the class to user incoming messages
+            }
+    
+            return item;
+        };
+    
+        // Show the loader when the bot starts responding
+        chatSession.onOutgoing(function (data) {
+            trace("outgoing message:|| " + JSON.stringify(data));
+            setIsBotTyping(true); // Show loader while waiting for bot response
+        });
+    
+        // Hide the loader when the bot's response arrives
+        chatSession.onIncoming(function (data) {
+            trace("incoming message:|| " + JSON.stringify(data));
+            setIsBotTyping(false); // Hide loader
+        });
+    
+        chatSession.onChatDisconnected(function (data) {
+            info("Chat has been disconnected");
+            trace(data);
+    
+            setChatInitialized(false); // Reset chat initialization state
+            setCurrentState(chatWithFormStates.FORM); // Redirect to the login form
+    
+            if (Object.keys(dataFromInputForm).length !== 0) {
+                setToggleToForm(true);
+            }
         });
     };
+    
+
+    const handleChatIconClick = () => {
+        if (!chatInitialized) {
+            setCurrentState(chatWithFormStates.FORM); // Show the login form
+            setWidgetIsOpen(false);
+        } else {
+            setWidgetIsOpen(true); // Open active chat
+        }
+    };
+    
 
     const failureHandler = (e) => {
         // chat failed
@@ -173,8 +257,44 @@ const ChatWidget = ({
             setChatInitialized(false);
         }
     };
-
     useEffect(() => {
+        log("useEffect");
+    
+        // Initialize the Amazon Chat Interface
+        try {
+            window.connect.ChatInterface.init({
+                containerId: 'chat-widget',
+                headerConfig: {
+                    isHTML: true,
+                    render: () => {
+                        return (`<div class="header-wrapper">
+                            <div class="logodata">
+                            <img src="./img/logo.png" style={{ marginRight: 10px;width:30px }}></img>
+                                    <h2 class="welcome-text">Customer Support</h2>
+                                    <AiOutlineClose size={24} color="#fff" style={{ cursor: 'pointer' }}  />
+                                    </div>
+                                </div>`);
+                    }
+                },
+            });
+        } catch (e) {
+            error('window.connect.ChatInterface.init');
+            error(e);
+        }
+    
+        // Handle toggling to the form when chat ends
+        if (toggleToForm && !widgetIsOpen) {
+            setCurrentState(chatWithFormStates.FORM); // Ensure form is displayed
+            setToggleToForm(false);
+        }
+    
+        // Initialize chat if not already initialized
+        if (!chatInitialized) {
+            initializeChat();
+        }
+    }, [widgetIsOpen, chatInitialized, toggleToForm]);
+    
+    /*useEffect(() => {
         log("useEffect");
         try {
             window.connect.ChatInterface.init({
@@ -185,7 +305,8 @@ const ChatWidget = ({
                         return (`<div class="header-wrapper">
                             <div class="logodata">
                             <img src="./img/logo.png" style={{ marginRight: 10px;width:30px }}></img>
-                                    <h2 class="welcome-text">${description}</h2>
+                                    <h2 class="welcome-text">Customer Support</h2>
+                                    <AiOutlineClose size={24} color="#fff" style={{ cursor: 'pointer' }}  />
                                     </div>
                                 </div>`);
                     }
@@ -203,14 +324,20 @@ const ChatWidget = ({
         if (!chatInitialized) {
             initializeChat();
         }
-    }, [widgetIsOpen]);
+    }, [widgetIsOpen]);*/
 
     return (
         <ChatContainer id="chat-container" device={device}>
             <ChatWrapper id="chat-wrapper" primaryColor={primaryColor} device={device}>
                 <div id="chat-widget"></div>
+                {isBotTyping && (
+                    <div className="typing-indicator">
+                        {/* <Spinner primaryColor={primaryColor} /> */}
+                        <p>Criteria is typing...</p>
+                    </div>
+                )}
             </ChatWrapper>
-            {loading && <Spinner primaryColor={primaryColor} />}
+            {/* {loading && <Spinner primaryColor={primaryColor} />} */}
         </ChatContainer>
     );
 };

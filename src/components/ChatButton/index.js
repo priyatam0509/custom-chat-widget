@@ -12,8 +12,6 @@ const { log } = genLogger(name);
 
 
 const ChatButton = (props) => {
-  log(">>> Init");
-  log(props);
   const { chatWithoutForm, forceUnmountChatWidget, setForceUnmountChatWidget, setWidgetIsOpen, widgetIsOpen, currentState } = props;
   const { primaryColor } = useAppConfig();
   const handleChatIconClickEvent = (e) => {

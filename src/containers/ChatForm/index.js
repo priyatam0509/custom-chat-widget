@@ -5,12 +5,14 @@ import InputField from '../../components/InputField';
 import { FormSection, SubmitButton, FormHeader, Form, TooltipText } from './styled';
 import { genLogger } from "../../lib/logger";
 import { AiOutlineClose } from "react-icons/ai";
+import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
+
 // import './chatform.css'
 
 const name = loggerNames.containers.CHAT_FORM;
 const { log } = genLogger(name);
 
-const ChatForm = ({ setData, setCurrentState }) => {
+const ChatForm = ({ setData, setCurrentState, setWidgetIsOpen, widgetIsOpen }) => {
     log('>>> Init');
     const { primaryColor, description, preChatForm: { inputFields } } = useAppConfig();
     const inputRefs = useRef(inputFields.map(() => createRef()));
@@ -30,6 +32,10 @@ const ChatForm = ({ setData, setCurrentState }) => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         return emailPattern.test(email);
     };
+
+    const handleCrossButton = (e) => {
+        setWidgetIsOpen(false);
+      }
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -69,7 +75,27 @@ const ChatForm = ({ setData, setCurrentState }) => {
         log('Form validated, continuing...');
         setCurrentState(chatWithFormStates.CHAT_WIDGET);
     };
-
+    const handleChatIconClickEvent = () => {
+        toggleChatIcon(!widgetIsOpen);
+      }
+  
+      const toggleChatIcon = (open) => {
+        if (chatWithoutForm && forceUnmountChatWidget) setForceUnmountChatWidget(false)
+        const timeline = anime.timeline({
+            duration: 750,
+            easing: 'easeOutExpo'
+            })
+            timeline.add({
+            targets: ".chat",
+            d: [
+                {
+                value: !open ? chatSVGPath : closeChatSVGPath
+                }
+            ],
+            strokeWidth: !open ? 3 : 1,
+          });
+        setWidgetIsOpen(open);
+      }
     // const getTooltipContent = (fieldName) => {
     //     switch (fieldName.toLowerCase()) {
     //         case 'event id (?)':
@@ -90,7 +116,7 @@ const ChatForm = ({ setData, setCurrentState }) => {
                 <img src="./img/logo.png"></img>
                 <h2 className="preChatForm-welcome-text">{description}</h2>
                 </div>
-                <AiOutlineClose size={24} color="#fff" />
+                <AiOutlineClose onClick={() => handleCrossButton()} size={24} color="#fff" style={{ cursor: 'pointer' }}  />
             </FormHeader>
             <Form onSubmit={submitForm} device={device}>
     {inputFields.map((field, index) => (
@@ -124,7 +150,7 @@ const ChatForm = ({ setData, setCurrentState }) => {
                         onMouseEnter={() => setActiveTooltip("event id")}
                         onMouseLeave={() => setActiveTooltip(null)}
                     >
-                        (?)
+                        <HiOutlineQuestionMarkCircle size={20} color="#000"/>
                     </span>
                 )}
             </label>

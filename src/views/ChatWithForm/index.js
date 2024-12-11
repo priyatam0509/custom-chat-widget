@@ -49,7 +49,8 @@ const ChatWithForm = () => {
                 >
                 {
                     currentState === chatWithFormStates.FORM ? (
-                    <ChatForm  setData={setData} setCurrentState={setCurrentState} />
+                    <ChatForm  setData={setData} setCurrentState={setCurrentState} widgetIsOpen={widgetIsOpen}
+                    setWidgetIsOpen={setWidgetIsOpen} />
                     ) : (
                         <ChatWidget dataFromInputForm={data} setCurrentState={setCurrentState} setWidgetIsOpen={setWidgetIsOpen} widgetIsOpen={widgetIsOpen} />
                     )

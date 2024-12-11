@@ -46,7 +46,9 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.p`
-    margin-top: 10px;
+    margin: 0px;
+    font-size:14px;
+    padding-bottom:10px
     font-weight: bold;
     font-style: italic;
     color: #b60000;

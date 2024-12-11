@@ -97,6 +97,9 @@ export const ChatWrapper = styled.div`
 .eMnscU {
     background: rgb(215 215 215);
 }
+    .fZyvSv {
+    display: none;
+}
     .eMnscU::after {
     display: none;
 }
