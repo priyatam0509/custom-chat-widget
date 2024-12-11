@@ -32,7 +32,7 @@ export const loggerNames = {
     CHAT_BUTTON: 'ChatButton',
     CHAT_ICON: 'ChatIcon',
     INPUT_FIELD: 'InputField',
-    SPINNER: 'Spinner'
+    SPINNER: 'loop'
   },
   containers: {
     CHAT_FORM: 'ChatForm',
@@ -64,9 +64,9 @@ export const chatParties = {
 
 
 export const chatWidgetDefaults = {
-  NAME: 'Customer',
-  USER_NAME: 'Customer',
-  CUSTOMER_NAME: 'Customer',
+  NAME: 'Candidate ',
+  USER_NAME: 'Candidate ',
+  CUSTOMER_NAME: 'Candidate ',
   ENABLE_ATTACHMENTS: false,
   PRIMARY_COLOR: "#3F5773",
   DESCRIPTION: 'Welcome to Amazon chat',

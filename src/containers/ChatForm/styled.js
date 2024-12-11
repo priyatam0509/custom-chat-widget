@@ -209,7 +209,7 @@ export const SubmitButton = styled.button`
 export const TooltipText = styled.div`
   // display: none;
   position: absolute;
-  top: 47%; /* Positions the tooltip below the field */
+  top: 40%; /* Positions the tooltip below the field */
   left: 19%;
   // transform: translateX(-50%);
   background-color: #3F5773; /* Tooltip background color */
@@ -250,6 +250,7 @@ export const TooltipText = styled.div`
     display: block;
   }
 `;
+
 const FormComponent = () => {
   return (
     <>
