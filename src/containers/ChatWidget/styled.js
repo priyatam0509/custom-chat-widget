@@ -26,6 +26,7 @@ export const ChatWrapper = styled.div`
   }
   .logodata{
   display:flex;
+  justify-content: space-between;
   }
   .logodata img{
   width:30px;

@@ -4,7 +4,7 @@ import { device, chatWithFormStates, loggerNames, inputFieldValidations } from '
 import InputField from '../../components/InputField';
 import { FormSection, SubmitButton, FormHeader, Form, TooltipText } from './styled';
 import { genLogger } from "../../lib/logger";
-import { AiOutlineClose } from "react-icons/ai";
+import CloseIcon from '../../components/CloseIcon';
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 
 // import './chatform.css'
@@ -19,6 +19,7 @@ const ChatForm = ({ setData, setCurrentState, setWidgetIsOpen, widgetIsOpen }) =
     const [activeTooltip, setActiveTooltip] = useState(null);
     const [formData, setFormData] = useState({});  // State to hold form data
     const [emailError, setEmailError] = useState("");  // State for email error message
+    // const [widgetIsOpen, setWidgetIsOpen] = useState(true);
 
     const handleInputDataChange = (name, value) => {
         setFormData(prev => ({
@@ -33,9 +34,9 @@ const ChatForm = ({ setData, setCurrentState, setWidgetIsOpen, widgetIsOpen }) =
         return emailPattern.test(email);
     };
 
-    const handleCrossButton = (e) => {
-        setWidgetIsOpen(false);
-      }
+    // const handleCrossButton = (e) => {
+    //     setWidgetIsOpen(false);
+    //   }
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -116,7 +117,7 @@ const ChatForm = ({ setData, setCurrentState, setWidgetIsOpen, widgetIsOpen }) =
                 <img src="./img/logo.png"></img>
                 <h2 className="preChatForm-welcome-text">{description}</h2>
                 </div>
-                <AiOutlineClose onClick={() => handleCrossButton()} size={24} color="#fff" style={{ cursor: 'pointer' }}  />
+                <CloseIcon setWidgetIsOpen={setWidgetIsOpen} />
             </FormHeader>
             <Form onSubmit={submitForm} device={device}>
     {inputFields.map((field, index) => (
@@ -172,7 +173,7 @@ const ChatForm = ({ setData, setCurrentState, setWidgetIsOpen, widgetIsOpen }) =
             {activeTooltip === "event id" && (
                 <TooltipText className="tooltip-text">
                     {/* {getTooltipContent(field.name)} */}
-                    <p>Enter the unique identifier for your event. This helps us provide specific information.</p>
+                    <p>Your Event ID is a 16 Digit Code (XXX-***-***-***) and is located in the assessment invite email you received, usually beneath the Testing Center URL</p>
                 </TooltipText>
             )}
 

@@ -1,9 +1,9 @@
-/* .loader{
-    display: none !important;
-}
- .bYooY{
-    background-color: transparent;
-} */
+body {
+    font-family: 'Montserrat', sans-serif;
+  }
+  h1, h2, h3,h4,h5,h6,p {
+    font-family: 'Montserrat', sans-serif;
+  }
 .typing-indicator {
     display: flex;
     align-items: center;
