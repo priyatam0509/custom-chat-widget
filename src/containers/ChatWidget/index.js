@@ -338,13 +338,13 @@ const ChatWidget = ({
         <ChatContainer id="chat-container" device={device}>
             <ChatWrapper id="chat-wrapper" primaryColor={primaryColor} device={device}>
                 <div id="chat-widget"></div>
-                {isBotTyping && (
-                    <div className="typing-indicator">
+                {/* {isBotTyping && (
+                    <div className="typing-indicator"> */}
                         {/* <Spinner primaryColor={primaryColor} /> */}
-                        <p>Criteria is typing...</p>
+                        {/* <p>Criteria is typing...</p>
                         
                     </div>
-                )}
+                )} */}
             </ChatWrapper>
             {/* {loading && <Spinner primaryColor={primaryColor} />} */}
         </ChatContainer>
