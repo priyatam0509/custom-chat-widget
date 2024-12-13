@@ -7,7 +7,7 @@ import { useAppConfig } from '../../providers/AppConfigProvider';
 import { device, chatWithFormStates, chatWidgetDefaults, chatParties, loggerNames } from '../../constants';
 import { ChatContainer, ChatWrapper } from './styled';
 import { genLogger } from "../../lib/logger";
-import { AiOutlineClose } from "react-icons/ai";
+import CloseIcon from '../../components/CloseIcon';
 
 const name = loggerNames.containers.CHAT_WIDGET;
 const { log, error, trace, info } = genLogger(name);
@@ -257,6 +257,10 @@ const ChatWidget = ({
             setChatInitialized(false);
         }
     };
+    
+    const handleCrossButton = () => {
+        setWidgetIsOpen(false);  // Close the widget by setting the state to false
+      };
     useEffect(() => {
         log("useEffect");
     
@@ -265,15 +269,19 @@ const ChatWidget = ({
             window.connect.ChatInterface.init({
                 containerId: 'chat-widget',
                 headerConfig: {
-                    isHTML: true,
+                    isHTML: false,  // set to false to use JSX
                     render: () => {
-                        return (`<div class="header-wrapper">
-                            <div class="logodata">
-                            <img src="./img/logo.png" style={{ marginRight: 10px;width:30px }}></img>
-                                    <h2 class="welcome-text">Customer Support</h2>
-                                    <AiOutlineClose size={24} color="#fff" style={{ cursor: 'pointer' }}  />
+                        return (
+                            <div className="header-wrapper">
+                                <div className="logodata">
+                                    <div style={{display:"flex"}}>
+                                        <img src="./img/logo.png" style={{ marginRight: 10, width: 30 }} alt="Logo" />
+                                        <h2 className="welcome-text">Candidate Support</h2>
                                     </div>
-                                </div>`);
+                                    <CloseIcon setWidgetIsOpen={setWidgetIsOpen} />
+                                </div>
+                            </div>
+                        );
                     }
                 },
             });
@@ -330,12 +338,13 @@ const ChatWidget = ({
         <ChatContainer id="chat-container" device={device}>
             <ChatWrapper id="chat-wrapper" primaryColor={primaryColor} device={device}>
                 <div id="chat-widget"></div>
-                {isBotTyping && (
-                    <div className="typing-indicator">
+                {/* {isBotTyping && (
+                    <div className="typing-indicator"> */}
                         {/* <Spinner primaryColor={primaryColor} /> */}
-                        <p>Criteria is typing...</p>
+                        {/* <p>Criteria is typing...</p>
+                        
                     </div>
-                )}
+                )} */}
             </ChatWrapper>
             {/* {loading && <Spinner primaryColor={primaryColor} />} */}
         </ChatContainer>
